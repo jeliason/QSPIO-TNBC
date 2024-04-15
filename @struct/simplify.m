@@ -1,6 +1,6 @@
 % Overloaded 'simplify' for Parameter Structures
 
-function b = simflify(a)
+function b = simplify(a)
   
   ui = 'SimBiology';
   
