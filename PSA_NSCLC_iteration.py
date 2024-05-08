@@ -16,10 +16,11 @@ args = parser.parse_args()
 print('Number of parameter sets: ',args.n_param_sets)
 print('Write directory: ',args.write_directory)
 
-try:
-	start_index = int(os.environ['SLURM_PROCID'])
-except KeyError:
-	start_index = args.start_index
+# try:
+# 	start_index = int(os.environ['SLURM_PROCID'])
+# except KeyError:
+# 	start_index = args.start_index
+start_index = args.start_index
 print('Params row start index: ' + str(start_index))
 
 params_df = pd.read_csv('params_PSA.csv')
