@@ -1,5 +1,5 @@
-% function [success,M1,M2,Teff,T1exh,T0,Th,Thexh,C_total,VDT] = PSA_NSCLC_iteration(param_struct)
-function [M1_M2,Treg_CD8,CD8_CD4] = PSA_NSCLC_iteration(param_struct)
+function [success,idx,M1,M2,Teff,T1exh,T0,Th,Thexh,C_total,VDT] = PSA_NSCLC_iteration(param_struct)
+% function [M1_M2,Treg_CD8,CD8_CD4] = PSA_NSCLC_iteration(param_struct)
 
     load('PSA_iteration.mat','model');
     dt = 56;
@@ -54,9 +54,9 @@ function [M1_M2,Treg_CD8,CD8_CD4] = PSA_NSCLC_iteration(param_struct)
         idx = find((target_V_T-V_T)<0,1);
         if isempty(idx) % tumour did not reach target size
             disp(['Initial conditions: ' num2str(target_V_T) 'mL not reached (max: ' num2str(max(V_T)) 'mL)']);
-            M1_M2 = inf;
-            Treg_CD8 = inf;
-            CD8_CD4 = inf;
+            % M1_M2 = inf;
+            % Treg_CD8 = inf;
+            % CD8_CD4 = inf;
         else
             success = 1;
             [~,M1,~] = selectbyname(simData, 'V_T.Mac_M1');
