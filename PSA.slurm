@@ -13,4 +13,4 @@ module load matlab/R2023b
 source /home/${USER}/.bashrc
 conda activate matlab_QSP
 
-python PSA_NSCLC_iteration.py --start_index $SLURM_ARRAY_TASK_ID --n_param_sets 5 --write_directory /nfs/turbo/umms-ukarvind/joelne/PSA_simulations
+python PSA_NSCLC_iteration.py --slurm_task_id $SLURM_ARRAY_TASK_ID --n_param_sets 5 --write_directory /nfs/turbo/umms-ukarvind/joelne/PSA_simulations

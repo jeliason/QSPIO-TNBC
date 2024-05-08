@@ -9,7 +9,7 @@ import os
 
 print('Parsing arguments...')
 parser = argparse.ArgumentParser()
-parser.add_argument('--start_index', type=int, default=0)
+parser.add_argument('--slurm_task_id', type=int, default=0)
 parser.add_argument('--n_param_sets', type=int, default=1)
 parser.add_argument('--write_directory', type=str, default='.')
 args = parser.parse_args()
@@ -20,7 +20,7 @@ print('Write directory: ',args.write_directory)
 # 	start_index = int(os.environ['SLURM_PROCID'])
 # except KeyError:
 # 	start_index = args.start_index
-start_index = args.start_index
+start_index = args.slurm_task_id * args.n_param_sets
 print('Params row start index: ' + str(start_index))
 
 params_df = pd.read_csv('params_PSA.csv')
