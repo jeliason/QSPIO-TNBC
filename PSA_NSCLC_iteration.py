@@ -1,9 +1,17 @@
+print('Importing libraries...')
 import matlab.engine
 import pickle as pkl
+import numpy as np
 
-
+print('Starting MATLAB engine...')
 eng = matlab.engine.start_matlab()
 eng.addpath('scripts/')
+eng.addpath('mini models/')
+eng.addpath('model/')
+eng.addpath('parameters/')
+eng.addpath('PK_fitting/')
+eng.addpath('postprocessing/')
+eng.addpath('visualization/')
 
 param_struct = {
     'k_C1_growth': 0.0160,
@@ -44,7 +52,17 @@ param_struct = {
     'Kc_aPDL1': 1.2682
 }
 
+print('Running MATLAB script...')
 success,idx,M1,M2,Teff,T1exh,T0,Th,Thexh,C_total,VDT = eng.PSA_NSCLC_iteration(param_struct,nargout=11)
-pkl.dump([success,idx,M1,M2,Teff,T1exh,T0,Th,Thexh,C_total,VDT],open('PSA_NSCLC_iteration.pkl','wb'))
 
+print('Saving results...')
+
+result = [M1,M2,Teff,T1exh,T0,Th,Thexh,C_total]
+result = [np.array(r) for r in result]
+result = [success,idx] + result + [VDT]
+
+result_dict = dict(zip(['success','idx','M1','M2','Teff','T1exh','T0','Th','Thexh','C_total','VDT'],result))
+pkl.dump(result_dict,open('PSA_NSCLC_iteration.pkl','wb'))
+
+print('Finished.')
 # M1_M2,Treg_CD8,CD8_CD4 = eng.PSA_NSCLC_iteration(param_struct,nargout=3)
