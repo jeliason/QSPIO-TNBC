@@ -1,6 +1,29 @@
 function [success,idx,M1,M2,Teff,T1exh,T0,Th,Thexh,C_total,VDT] = PSA_NSCLC_iteration(param_struct)
 % function [M1_M2,Treg_CD8,CD8_CD4] = PSA_NSCLC_iteration(param_struct)
+    %% Add use-defined units into both Simbiology and Symbolic libraries
+    % Add 'cell' unit to SimBiology and Symbolic Toolboxes
+    if (isempty(sbioshowunits('cell')))
+        cell_unit = sbiounit('cell','molecule');
+        sbioaddtolibrary(cell_unit);
+    end
+    % Symbolic Unit
+    u = symunit;
+    try u.cell;
+    catch
+        newUnit('cell',u.molecule);
+    end
 
+    % Add 'mU' unit to SimBiology and Symbolic Toolboxes
+    mU_unit = sbiounit('mU','mole/liter');
+    sbioaddtolibrary(mU_unit);
+    % Symbolic Unit
+    u = symunit;
+    try u.mU;
+    catch
+        newUnit('mU',u.molarity);
+    end
+
+    
     load('PSA_iteration1.mat','model');
     % immune_oncology_model_NSCLC;
     dt = 56;
