@@ -1,8 +1,8 @@
 #!/bin/bash
 #SBATCH --job-name=PSA_simulations
 #SBATCH --array=0-20
-#SBATCH --output=output_%a.log
-#SBATCH --error=error_%a.log
+#SBATCH --output=output_logs/output_%a.log
+#SBATCH --error=error_logs/error_%a.log
 #SBATCH --mem-per-cpu=4G
 #SBATCH --time=00:15:00
 #SBATCH --mail-user=joelne@umich.edu
@@ -17,10 +17,10 @@ conda activate matlab_QSP
 python PSA_NSCLC_iteration.py --task_index $SLURM_ARRAY_TASK_ID --n_param_sets 30 --write_directory /nfs/turbo/umms-ukarvind/joelne/PSA_simulations
 
 # Check if there are any errors in the error log
-if [ -s error_${SLURM_ARRAY_TASK_ID}.log ]; then
+if [ -s error_logs/error_${SLURM_ARRAY_TASK_ID}.log ]; then
     echo "Python script encountered errors. Error log contents:"
-    cat error_${SLURM_ARRAY_TASK_ID}.log >> python_errors_${SLURM_ARRAY_TASK_ID}.log
+    cat error_logs/error_${SLURM_ARRAY_TASK_ID}.log >> error_logs/python_errors_${SLURM_ARRAY_TASK_ID}.log
 fi
 
 # Remove the original error log file
-rm error_${SLURM_ARRAY_TASK_ID}.log
+rm error_logs/error_${SLURM_ARRAY_TASK_ID}.log
