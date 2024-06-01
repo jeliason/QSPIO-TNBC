@@ -5,6 +5,7 @@ sbioreset
 %% Step 1. Generate plausible patients and model prediction
 % LHS sampling
 immune_oncology_model_NSCLC
+%%
 n_PSA = 30000;
 params_in  = PSA_param_in_NSCLC;
 params_in  = PSA_setup(model,params_in,n_PSA);

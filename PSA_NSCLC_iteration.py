@@ -54,4 +54,3 @@ for i in range(args.n_param_sets):
 	pkl.dump(result_dict,open(args.write_directory + '/PSA_NSCLC_iteration_' + str(idx) + '.pkl','wb'))
 
 print('Finished.')
-# M1_M2,Treg_CD8,CD8_CD4 = eng.PSA_NSCLC_iteration(param_struct,nargout=3)

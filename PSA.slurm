@@ -3,8 +3,8 @@
 #SBATCH --array=0-20
 #SBATCH --output=output_logs/output_%a.log
 #SBATCH --error=error_logs/error_%a.log
-#SBATCH --mem-per-cpu=4G
-#SBATCH --time=00:15:00
+#SBATCH --mem-per-cpu=2G
+#SBATCH --time=00:05:00
 #SBATCH --mail-user=joelne@umich.edu
 #SBATCH --mail-type=ALL
 
