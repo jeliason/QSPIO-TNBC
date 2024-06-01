@@ -30,3 +30,9 @@ for i,f in enumerate(files):
 
 # save results
 np.save('/nfs/turbo/umms-ukarvind/joelne/PSA_simulations.npy',results)
+
+# get simulation number from each
+simulations = np.array([f.split('_')[-1].split('.')[0] for f in files])
+
+# save simulation numbers
+np.save('/nfs/turbo/umms-ukarvind/joelne/PSA_simulation_numbers.npy',simulations)
