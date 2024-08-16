@@ -1,8 +1,9 @@
 %% Immune Oncology Model
 % Script for setting up and running the immune oncology model in simbiology
-clear
-close all
-sbioreset
+% clear
+% close all
+% sbioreset
+% clc
 
 %% Add use-defined units into both Simbiology and Symbolic libraries
 % Add 'cell' unit to SimBiology and Symbolic Toolboxes
@@ -38,7 +39,7 @@ model_name = 'Immune Oncology Model';
 start_time = 0.0; % [days]
 time_step = 1; % [days] 0.01 days ~ 15 mins
 end_time = 400; % [days]
-absolute_tolerance = 1e-9;
+absolute_tolerance = 1e-6;
 relative_tolerance = 1e-6;
 % solver = 'ode15s';
 solver = 'sundials';
@@ -86,7 +87,9 @@ model = macrophage_module(model,params_out,{'C1','C2'},'aCD47',0); % PK module i
 
 %% Setup Dosing
 % dose_schedule = [];
-% dose_schedule = schedule_dosing({'atezolizumab'});
+dose_schedule = schedule_dosing({'atezolizumab'});
+% dose_schedule = schedule_dosing({'nabPaclitaxel','atezolizumab'}, 'atezolizumab_dose',840/80, 'atezolizumab_schedule',[28,14,30], 'nabPaclitaxel_dose',125, 'nabPaclitaxel_schedule',[0,21,20]);
+
 % dose_schedule = schedule_dosing({'nabPaclitaxel'});
 
 % dbstop if warning
@@ -117,6 +120,6 @@ model = macrophage_module(model,params_out,{'C1','C2'},'aCD47',0); % PK module i
 % Plot diagnostics
 % if (success)
 %    diagnostic_plot(simData,model);
-%    diagnostic_plot_H(simData);
-%    diagnostic_plot_KPR(simData,model);
+   % diagnostic_plot_H(simData);
+   % diagnostic_plot_KPR(simData,model);
 % end
