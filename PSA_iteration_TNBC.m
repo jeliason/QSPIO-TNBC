@@ -8,6 +8,7 @@ load('VP.mat','params_in')
 config = getconfigset(model);
 time = get(config.SolverOptions,'OutputTimes');
 n_PSA = length(params_in.(params_in.names{1}).LHS);
+model_PSA = [];
 
 for i = start_index:stop_index
     display(['Sample ',num2str(i),'/',num2str(n_PSA)]);
