@@ -1,4 +1,4 @@
-function simDataPSA = PSA_iteration_TNBC(start_index, stop_index)
+function PSA_iteration_TNBC(start_index, stop_index,save_folder)
 
 immune_oncology_model_TNBC
 
@@ -60,5 +60,5 @@ for i = start_index:stop_index
     % save model ICs
     simDataPSA(i).ICs = get_ICs(simData);
 end
-
+save(save_folder + "/" + string(start_index) + "_" + string(stop_index) + ".mat","simDataPSA");
 end
