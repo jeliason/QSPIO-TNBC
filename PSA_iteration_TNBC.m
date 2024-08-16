@@ -10,11 +10,14 @@ time = get(config.SolverOptions,'OutputTimes');
 n_PSA = length(params_in.(params_in.names{1}).LHS);
 model_PSA = [];
 
-for i = start_index:stop_index
+seq = start_index:stop_index;
+
+for idx = 1:length(seq)
+    i = seq(idx);
     display(['Sample ',num2str(i),'/',num2str(n_PSA)]);
-    simDataPSA(i).index = i;
+    simDataPSA(idx).index = i;
     % Set the new parameters
-    if i > 1
+    if idx > 1
       delete(model_PSA)
     end
     model_PSA = copyobj(model);
@@ -32,7 +35,7 @@ for i = start_index:stop_index
     % Set Initial Conditions
 
     [model_PSA,success,~] = initial_conditions(model_PSA,'Variant',variantObj);
-    simDataPSA(i).success = double(success);
+    simDataPSA(idx).success = double(success);
 
     % Run the model with drugs
     if (success)
@@ -41,13 +44,13 @@ for i = start_index:stop_index
               % Remove simulations that reached the time limit
               if size(simData.Data,1) < length(time)
                   simData = [];
-                  simDataPSA(i).success = -1;
+                  simDataPSA(idx).success = -1;
                   disp('Simulation takes longer than the preset time limit');
               end
           catch
               disp('Integration tolerance not met');
               simData = [];
-              simDataPSA(i).success = -1;
+              simDataPSA(idx).success = -1;
           end
 
     else
@@ -56,10 +59,10 @@ for i = start_index:stop_index
     end
 
     % save model output struture within an array of structures
-    simDataPSA(i).simData = simData;
+    simDataPSA(idx).simData = simData;
 
     % save model ICs
-    simDataPSA(i).ICs = get_ICs(simData);
+    simDataPSA(idx).ICs = get_ICs(simData);
 end
 save(save_folder + "/" + string(start_index) + "_" + string(stop_index) + ".mat","simDataPSA");
 end
